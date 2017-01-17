@@ -26,8 +26,6 @@
 		<netty.version>4.1.6.Final</netty.version>
 
 		<scala.version>2.11.8</scala.version>
-		<scalaVersion>2.11.8</scalaVersion>
-		<scalaBinaryVersion>2.11</scalaBinaryVersion>
 
 		<akka.version>2.4.16</akka.version>
 		<akkaHttp.version>10.0.1</akkaHttp.version>
@@ -58,57 +56,15 @@
 		<dependency>
 			<groupId>org.scala-lang</groupId>
 			<artifactId>scala-library</artifactId>
-			<version>${scalaVersion}</version>
+			<version>${scala.version}</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.scala-lang.modules</groupId> <artifactId>scala-xml_${scalaBinaryVersion}</artifactId> 
-			<version>1.0.6</version> </dependency> <dependency> <groupId>org.scala-lang.modules</groupId> 
-			<artifactId>scala-parser-combinators_${scalaBinaryVersion}</artifactId> <version>1.0.4</version> 
-			</dependency> <dependency> <groupId>org.scala-lang.modules</groupId> <artifactId>scala-swing_${scalaBinaryVersion}</artifactId> 
-			<version>2.0.0-M2</version> </dependency> -->
 
-
-
-
-		<!-- akka -->
-		<!-- <dependency> <groupId>com.typesafe.akka</groupId> <artifactId>akka-stream_2.11</artifactId> 
-			<version>${akka.version}</version> </dependency> <dependency> <groupId>com.typesafe.akka</groupId> 
-			<artifactId>akka-http-experimental</artifactId> <version>${akka.version}</version> 
-			</dependency> -->
-<!-- 		<dependency>
-			<groupId>com.typesafe.akka</groupId>
-			<artifactId>akka-http-core_2.11</artifactId>
-			<version>${akkaHttp.version}</version>
-		</dependency> -->
 		<dependency>
 			<groupId>com.typesafe.akka</groupId>
 			<artifactId>akka-http_2.11</artifactId>
 			<version>${akkaHttp.version}</version>
 		</dependency>
-<!-- 		<dependency>
-			<groupId>com.typesafe.akka</groupId>
-			<artifactId>akka-http-jackson_2.11</artifactId>
-			<version>${akkaHttp.version}</version>
-		</dependency>
-	  	<dependency>
-			<groupId>com.typesafe.akka</groupId>
-			<artifactId>akka-http-testkit_2.11</artifactId>
-			<version>${akkaHttp.version}</version>
-		</dependency>
-			<dependency>
-			<groupId>com.typesafe.akka</groupId>
-			<artifactId>akka-http-spray-json_2.11</artifactId>
-			<version>${akkaHttp.version}</version>
-		</dependency> 
 
-		<dependency>
-			<groupId>com.typesafe.akka</groupId>
-			<artifactId>akka-http-xml_2.11</artifactId>
-			<version>${akkaHttp.version}</version>
-		</dependency> 
--->
-
-		<!-- <dependency> <groupId>com.typesafe.play</groupId> <artifactId>play_2.11</artifactId> 
-			<version>2.5.6</version> </dependency> -->
 
 
 		<!-- 测试依赖 -->

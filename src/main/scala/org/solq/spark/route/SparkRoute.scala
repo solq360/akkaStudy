@@ -12,15 +12,21 @@ import akka.http.scaladsl.server.Directives.path
 import akka.http.scaladsl.server.Directives.post
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.unmarshalling.Unmarshaller
+import javax.inject.Inject
+import org.solq.spark.service.SparkServer
 
 class SparkRoute {
-  implicit val um: Unmarshaller[HttpEntity, QuerySpark] =
+   implicit val um: Unmarshaller[HttpEntity, QuerySpark] =
     Unmarshaller.byteStringUnmarshaller.mapWithCharset { (data, charset) =>
+      println(new String(data.toArray))
       JsonParse.objManager.readValue(data.toArray, classOf[QuerySpark])
     }
   val route1: Route = (post & path("query")) {
     entity(as[QuerySpark]) {
-      querySpark => complete(querySpark.toString())
+      querySpark => 
+        SparkServer.sparkServer.query(querySpark);
+        complete(querySpark.toString())
+      
     }
   }
 }

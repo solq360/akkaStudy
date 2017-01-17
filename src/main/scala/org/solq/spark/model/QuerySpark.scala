@@ -12,7 +12,9 @@ import java.util.Map
 final  case class QuerySpark(
   /** dbsource type */
   val st: SourceType,
-
+  /** url */
+  val url: String,
+  
   /** sql dsl */
   val sql: String,
   
@@ -20,4 +22,8 @@ final  case class QuerySpark(
   val options: Map[String, String] = new HashMap[String, String],
   
   /** option tmp table */
-  val tmpTable: String) 
+  val tmpTable: String,
+  
+   /** savePath */
+  val savePath: String
+) 

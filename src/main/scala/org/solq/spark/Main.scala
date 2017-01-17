@@ -8,7 +8,6 @@ import org.solq.spark.service.SparkServer
 
 
 object Main extends App {
-  new SparkServer;
   new RpcServer;
   new HttpServer().start();
 }

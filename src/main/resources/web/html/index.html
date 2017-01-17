@@ -1,3 +1,4 @@
+<head>
 <script type="text/javascript">  
     
 (function(){
@@ -7,15 +8,54 @@ window.embed_script = embed_script;
 //执行主程序
 embed_script(url,Main);
 
-function Main(){
 
+var MYSQL_CONTENT = '{\n'+
+'"dbtable" :"account",\n'+
+'"user" :"root",\n'+
+'"password" : "password"\n'+
+'}';
+var CSV_CONTENT ='{\n'+
+'"inferSchema" :"true",\n'+
+'"header" :"true"\n'+
+'}';
+
+var MYSQL_URL = "jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8";
+var CSV_URL = "/test.csv";
+function Main(){
+	
+
+	
+	$('#st').change(function(){
+		var val = $('#st').val();
+		switch(val){
+		case 'MYSQL':
+			$('#options').val(MYSQL_CONTENT);
+			$('#url').val(MYSQL_URL);
+			break;
+		case 'CSV':
+			$('#options').val(CSV_CONTENT);
+			$('#url').val(CSV_URL);
+
+			break;
+		}
+		
+	});
+	$('#st').trigger('change')
   $('#submit').click(function(){
   
     var d ={
-      dt: $('#id').val(),
-      sql : $('#name').val()
+      st: $('#st').val(),
+      sql : $('#sql').val(),
+      tmpTable: $('#tmpTable').val(),
+      options: $('#options').val(),
+      savePath : $('#savePath').val(),
+      url : $('#url').val(),
     }
-    d = JSON.stringify(d);
+     d.options = JSON.parse(d.options);
+    if(d.st=="MYSQL"){
+    	d.options.url = $('#url').val();
+    }
+     d = JSON.stringify(d);
     console.log(d)
     $.ajax({
     		dataType: 'json',
@@ -44,8 +84,41 @@ function embed_script(url ,cb){
  
 })();
 </script>
-<form action="query" method="post" enctype='application/json'>
-  <p>SourceType: <input type="text" id="dt" /></p>
-  <p>sql: <input type="text" id="sql" /></p>
-  <input id="submit" value="Submit" type="submit"  />
+
+<style type="text/css">
+.f1 p{
+	width:800px;
+}
+.f1 p input{
+	width:450px;
+	height:35px;
+}
+.f1 p textarea{
+	width:450px;
+	height:120px;
+}
+ .ls{
+  display: inline-block;
+    padding: 0 10px;
+    vertical-align: middle;
+    width:150px;
+ }
+</style>
+</head>
+<body>
+<form class="f1">
+  <p><label class="ls">SourceType:</label><select id="st" >
+  <option value="MYSQL">MYSQL</option>
+  <option value="CSV">CSV</option>
+  </select></p>
+  <p><label class="ls">sql: </label><textarea id="sql" >select  * from account</textarea></p>
+  <p><label class="ls">url: </label><input type="text" id="url" /></p>
+  
+  <p><label class="ls">tmpTable: </label><input type="text" id="tmpTable" /></p>
+  
+  <p><label class="ls">options: </label><textarea id="options" ></textarea></p>
+  <p><label class="ls">savePath: </label><input type="text" id="savePath" /></p>
+  
+  <input id="submit" value="Submit" type="button"  />
 </form>
+</body>
