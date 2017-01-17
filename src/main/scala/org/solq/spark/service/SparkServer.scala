@@ -1,4 +1,4 @@
-package org.solq.spark
+package org.solq.spark.service
 
 import org.apache.spark.sql.Dataset
 import org.apache.spark.sql.Row

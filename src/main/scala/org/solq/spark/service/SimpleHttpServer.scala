@@ -1,8 +1,9 @@
-package org.solq.spark
+package org.solq.spark.service
 
 import scala.io.StdIn
 
-
+ 
+import com.fasterxml.jackson.databind.ObjectMapper
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
@@ -17,10 +18,10 @@ import org.solq.spark.model.QuerySpark
 import scala.tools.asm.Item
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
- 
-class HttpServer {
-   var objManager = new ObjectMapper;
-   objManager.registerModule(DefaultScalaModule)
+
+class SimpleHttpServer {
+  var objManager = new ObjectMapper;
+  objManager.registerModule(DefaultScalaModule)
   def start() {
     implicit val system = ActorSystem("my-system")
     implicit val materializer = ActorMaterializer()
@@ -34,13 +35,13 @@ class HttpServer {
     var route: Route = (get & (path("index") | path(""))) {
       complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, indexHtml))
     } ~
-//      (get & path("test")) {
-//        decodeRequest {
-//          entity(as[String]) { jsonStr =>
-//            complete(jsonStr)
-//          }
-//        }
-//      } ~
+      //      (get & path("test")) {
+      //        decodeRequest {
+      //          entity(as[String]) { jsonStr =>
+      //            complete(jsonStr)
+      //          }
+      //        }
+      //      } ~
       (pathPrefix("query") & get) {
         complete(s"<h1>{id}</h1>")
       } ~

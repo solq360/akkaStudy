@@ -1,0 +1,51 @@
+<script type="text/javascript">  
+    
+(function(){
+var debugFlag = false;
+var url = "https://code.jquery.com/jquery-1.12.3.min.js";
+window.embed_script = embed_script;
+//执行主程序
+embed_script(url,Main);
+
+function Main(){
+
+  $('#submit').click(function(){
+  
+    var d ={
+      dt: $('#id').val(),
+      sql : $('#name').val()
+    }
+    d = JSON.stringify(d);
+    console.log(d)
+    $.ajax({
+    		dataType: 'json',
+    		type : "POST",
+    		url : "query",
+    		contentType : "application/json",
+    		data : d,
+    		success : function(json) {
+    			console.log(json)
+    		}
+    	});		
+    return false;
+  });
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+/**
+嵌入script
+*/
+function embed_script(url ,cb){
+ 	var script = document.createElement('script');
+    script.setAttribute('type', 'text/javascript');
+    script.setAttribute('src', url);    
+	document.getElementsByTagName('head')[0].appendChild(script);
+	script.onload= cb;
+}
+ 
+})();
+</script>
+<form action="query" method="post" enctype='application/json'>
+  <p>SourceType: <input type="text" id="dt" /></p>
+  <p>sql: <input type="text" id="sql" /></p>
+  <input id="submit" value="Submit" type="submit"  />
+</form>

@@ -1,4 +1,4 @@
-package org.solq.spark
+package org.solq.spark.service
 
 import akka.actor.ActorSystem
 import akka.actor.Props
