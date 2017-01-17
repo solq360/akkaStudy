@@ -11,7 +11,6 @@ import org.apache.spark.sql.SparkSession
 import org.solq.spark.model.ISparkServer
 import org.solq.spark.model.QuerySpark
 import org.solq.spark.model.SourceType
-import org.apache.spark.api.java.function.VoidFunction
 
 object SparkServer {
   val sparkServer = new SparkServer;
@@ -53,9 +52,20 @@ private[service] class SparkServer extends ISparkServer {
         val ret: Dataset[Row] = sqlContext.sql(querySpark.sql)
         writeFile(ret, querySpark.savePath)
       }
+      case SourceType.JSON => {
+        val sqlContext = sc.sqlContext;
+        val df =  sqlContext.jsonFile(querySpark.url);
+        sqlContext.dropTempTable(querySpark.tmpTable)
+        df.createTempView(querySpark.tmpTable);
+        val ret: Dataset[Row] = sqlContext.sql(querySpark.sql)
+        writeFile(ret, querySpark.savePath)
+
+      }
     }
 
   }
+  
+  
   def writeFile(ret: Dataset[Row], savePath: String) = {
     var f: File = new File(savePath);
     if (f.canExecute()) {

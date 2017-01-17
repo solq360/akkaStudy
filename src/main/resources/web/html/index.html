@@ -35,7 +35,10 @@ function Main(){
 		case 'CSV':
 			$('#options').val(CSV_CONTENT);
 			$('#url').val(CSV_URL);
-
+			break;
+		case 'JSON':
+			$('#options').val("{}");
+			$('#url').val(CSV_URL);
 			break;
 		}
 		
@@ -110,11 +113,12 @@ function embed_script(url ,cb){
   <p><label class="ls">SourceType:</label><select id="st" >
   <option value="MYSQL">MYSQL</option>
   <option value="CSV">CSV</option>
+  <option value="JSON">JSON</option>
   </select></p>
   <p><label class="ls">sql: </label><textarea id="sql" >select  * from account</textarea></p>
   <p><label class="ls">url: </label><input type="text" id="url" /></p>
   
-  <p><label class="ls">tmpTable: </label><input type="text" id="tmpTable" /></p>
+  <p><label class="ls">tmpTable: </label><input type="text" id="tmpTable" value="account"/></p>
   
   <p><label class="ls">options: </label><textarea id="options" ></textarea></p>
   <p><label class="ls">savePath: </label><input type="text" id="savePath" /></p>
