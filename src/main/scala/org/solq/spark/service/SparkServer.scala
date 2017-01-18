@@ -4,7 +4,6 @@ import java.io.File
 import java.io.FileWriter
 import java.io.PrintWriter
 
-import org.apache.spark.sql.AnalysisException
 import org.apache.spark.sql.Dataset
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.SparkSession
@@ -12,6 +11,10 @@ import org.solq.spark.model.ISparkServer
 import org.solq.spark.model.QuerySpark
 import org.solq.spark.model.SourceType
 
+/***
+ * spark 查询简单实现 
+ * @author solq
+ * */
 object SparkServer {
   val sparkServer = new SparkServer;
 }
@@ -46,7 +49,7 @@ private[service] class SparkServer extends ISparkServer {
         val df = sqlContext.read
           .format("com.databricks.spark.csv")
           .options(querySpark.options)
-          .load(querySpark.url)
+          .load(querySpark.url: _*)
         sqlContext.dropTempTable(querySpark.tmpTable)
         df.createTempView(querySpark.tmpTable);
         val ret: Dataset[Row] = sqlContext.sql(querySpark.sql)
@@ -54,7 +57,7 @@ private[service] class SparkServer extends ISparkServer {
       }
       case SourceType.JSON => {
         val sqlContext = sc.sqlContext;
-        val df =  sqlContext.jsonFile(querySpark.url);
+        val df = sqlContext.read.json(querySpark.url: _*);
         sqlContext.dropTempTable(querySpark.tmpTable)
         df.createTempView(querySpark.tmpTable);
         val ret: Dataset[Row] = sqlContext.sql(querySpark.sql)
@@ -64,8 +67,7 @@ private[service] class SparkServer extends ISparkServer {
     }
 
   }
-  
-  
+
   def writeFile(ret: Dataset[Row], savePath: String) = {
     var f: File = new File(savePath);
     if (f.canExecute()) {
@@ -101,7 +103,7 @@ private[service] class SparkServer extends ISparkServer {
         writer.println(line)
       }
     } catch {
-      case t: Throwable => t.printStackTrace() 
+      case t: Throwable => t.printStackTrace()
     }
 
     writer.flush()

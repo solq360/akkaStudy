@@ -52,7 +52,7 @@ function Main(){
       tmpTable: $('#tmpTable').val(),
       options: $('#options').val(),
       savePath : $('#savePath').val(),
-      url : $('#url').val(),
+      url : $('#url').val().split($('#urlSplit').val()),
     }
      d.options = JSON.parse(d.options);
     if(d.st=="MYSQL"){
@@ -61,13 +61,17 @@ function Main(){
      d = JSON.stringify(d);
     console.log(d)
     $.ajax({
-    		dataType: 'json',
     		type : "POST",
     		url : "query",
     		contentType : "application/json",
     		data : d,
+    		timeout:0,
     		success : function(json) {
     			console.log(json)
+    			alert("ok")
+    		},error : function(e) {
+    			console.log(e)
+    			alert(e)
     		}
     	});		
     return false;
@@ -115,10 +119,11 @@ function embed_script(url ,cb){
   <option value="CSV">CSV</option>
   <option value="JSON">JSON</option>
   </select></p>
-  <p><label class="ls">sql: </label><textarea id="sql" >select  * from account</textarea></p>
-  <p><label class="ls">url: </label><input type="text" id="url" /></p>
-  
   <p><label class="ls">tmpTable: </label><input type="text" id="tmpTable" value="account"/></p>
+  <p><label class="ls">sql: </label><textarea id="sql" >select  * from account</textarea></p>
+  <p><label class="ls">url: </label><textarea id="url" > </textarea></p>
+  <p><label class="ls">urlSplit: </label><input type="text" id="urlSplit" value=","/></p>
+  
   
   <p><label class="ls">options: </label><textarea id="options" ></textarea></p>
   <p><label class="ls">savePath: </label><input type="text" id="savePath" /></p>
